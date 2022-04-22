@@ -1,0 +1,164 @@
+extends layout
+
+block content
+  h6 
+    if plant !== undefined 
+      a(href=plant.url) ← Back to #{plant.name}
+    else
+      a(href="/inventory") ← Back to Home
+  section(class="edit-form")
+    h2= title
+    form(method='POST' action='')
+      div.form-group
+        label(for='name') Name:
+        input(
+          id='name'
+          type='text'
+          placeholder='Name of plant'
+          name='name'
+          required='true'
+          value=(
+            undefined===plant ? '' : plant.name)
+        )
+      
+      div.form-group
+        label(for='name') Image URL:
+        input(
+          id='image'
+          type='text'
+          placeholder='URL of plant image'
+          name='image'
+          required='true'
+          value=(
+            undefined===plant ? '' : plant.image)
+        )
+
+      div.form-group
+        label(for='price') Price($):
+        input(
+          id='price'
+          type='number'
+          placeholder='Price of plant'
+          name='price'
+          required='true'
+          value=(
+            undefined===plant ? '' : plant.price)
+        )
+
+      div.form-group
+        label(for='count') In stock:
+        input(
+          id='price'
+          type='number'
+          placeholder='Number in stock'
+          name='count'
+          required='true'
+          value=(
+            undefined===plant ? '' : plant.count)
+        )
+      
+      div.form-group
+        label(for='category') Category:
+        select(
+          id='category'
+          name='category'
+        )
+          each item in categories
+            if (plant !== undefined)
+              if item.name === plant.category.name
+                option(
+                  value=item._id
+                  name=item.name
+                  selected= true
+                ) #{item.name}
+              else
+                option(
+                  name=item.name
+                  value=item._id
+                ) #{item.name}
+            else
+              option(
+                value=item._id
+                name=item.name
+              ) #{item.name}
+
+      div.form-group
+        label(for='zone') Zone:
+        select(
+          id='zone-form-control'
+          name='zone'
+        )
+          each zone in zones
+            if (plant !== undefined)
+              if zone.name === plant.zone.name
+                option(
+                  value=zone._id
+                  name=zone.name
+                  selected= true
+                )   #{zone.name}
+              else
+                option(
+                  value=zone._id
+                  name=zone.name
+                ) #{zone.name}
+            else
+              option(
+                value=zone._id
+                name=zone.name
+              ) #{zone.name}
+
+      div.form-group
+        label(for='seasonality') Seasonality:
+        each item in seasonalities
+          if (plant !== undefined)
+            if item.name === plant.seasonality.name
+              div(class='radio-wrapper')
+                input(
+                  id= 'seasonality'
+                  type='radio'
+                  name='seasonality'
+                  value=item._id
+                  checked= true
+                ) 
+                label(for= item.name) #{item.name}
+            else
+              div(class='radio-wrapper')
+                input(
+                  id= 'seasonality'
+                  type='radio'
+                  name='seasonality'
+                  value=item._id
+                )
+                label(for= item.name) #{item.name}
+          else
+            div(class='radio-wrapper')
+              input(
+                id= 'seasonality'
+                type='radio'
+                name='seasonality'
+                value=item._id
+              )
+              label(for= item.name) #{item.name}
+      
+      div.form-group
+        label(for='description') Description:
+          if (plant !== undefined)
+            textarea(
+              rows= '10'
+              id= 'description'
+              name='description'
+            ) #{plant.description}
+          else 
+            textarea(
+              rows= '10'
+              id= 'description'
+              name='description'
+            )
+      - let btnText
+      - (plant !== undefined ? btnText='Save Changes' : btnText='Add Plant')
+      button.btn-primary(
+        type='submit'
+      ) #{btnText}
+    
+    if (plant !== undefined)
+      a(href= plant.url+'/delete' class="delete") Delete Plant

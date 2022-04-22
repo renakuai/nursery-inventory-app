@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header Rena's Nursery
+    section(class= "intro intro-grid")
+      article(class="intro-wrapper")
+        h2(class = "intro-header") We help you build out the garden of your dreams
+        p(class = "intro-description") Plants grown by local nursery professionals who strive to deliver the highest quality plants for our customers
+    section(class = "hero")
+      img(
+        src='/images/main-hero.svg'
+        class='hero-img'
+        )
+    section(class= "content content-grid")
+      div(class="content-wrapper")
+        section(class="main")
+          block content

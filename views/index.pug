@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  div(class="header-wrapper")
+    h2= title
+    a(href='/inventory/plant/create' class='add-link') Add New Plant
+  div(class="counts-wrapper")
+    h3 Current inventory
+    section(class="counts")
+      article(class="count")
+        h5 Total Plants
+        - let total = 0
+        each item in data.select_all
+          - total += item.count
+        p(class="total")= total
+      article(class="count")
+        h5 Total Plant Types
+        p(class="total") #{data.plant_type_count} 
+      article(class="count")
+        h5 Total Trees
+        - let totalTrees = 0
+        each item in data.category
+          if(item.category.name == 'Trees')
+            - totalTrees += item.count
+        p(class="total")= totalTrees
+      article(class="count")
+        h5 Total Flowers
+        - let totalFlowers = 0
+        each item in data.category
+          if(item.category.name == 'Flowers')
+            - totalFlowers += item.count
+        p(class="total")= totalFlowers
+      article(class="count")
+        h5 Total Shrubs
+        - let totalShrubs = 0
+        each item in data.category
+          if(item.category.name == 'Shrubs')
+            - totalShrubs += item.count
+        p(class="total")= totalShrubs
+      article(class="count")
+        h5 Total Edible Plants
+        - let totalEdibles = 0
+        each item in data.category
+          if(item.category.name == 'Edibles')
+            - totalEdibles += item.count
+        p(class="total")= totalEdibles
+
+  section(class="plants")
+      each item in data.select_all
+        article(class="plant") 
+          a(href=item.url class="card")
+            img(src= item.image class="plant__img")
+            div(class="plant__metadata-wrapper")
+              h4 #{item.name}
+              p $#{item.price}
+            p #{item.count} in stock        

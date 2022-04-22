@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  section(class="plant-header")
+    div(class="header-right-wrapper")
+      h6 
+        a(href="/inventory") ← Back to Home
+      h2= title
+    div(class="header-left-wrapper")
+      a(href= data.url+'/edit' class="edit-link") Edit Item
+  section(class="detail-body")
+    div(class="plant-img-wrapper")
+      img(src= data.image class="plant-img" alt="Image of this plant")
+    div(class="plant-data-wrapper")
+      article(class= "plant-data")
+        h3 #[strong Price:] $#{data.price}
+        h3 #[strong In stock:] #{data.count}
+        h3 #[strong Category:] 
+          a(href= data.category.url) #{data.category.name}
+        h3 #[strong Seasonality:] 
+          a(href= data.seasonality.url) #{data.seasonality.name}
+        h3 #[strong Zone:] 
+          a(href= data.zone.url) #{data.zone.name}
+  p(class="plant-description") #{data.description}
+
